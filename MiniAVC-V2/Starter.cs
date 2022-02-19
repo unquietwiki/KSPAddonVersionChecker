@@ -24,7 +24,7 @@ using UnityEngine;
 namespace MiniAVC_V2
 {
     [KSPAddon(KSPAddon.Startup.Instantly, false)]
-//    [KSPAddon(KSPAddon.Startup.MainMenu, false)]
+    //    [KSPAddon(KSPAddon.Startup.MainMenu, false)]
     public class Starter : MonoBehaviour
     {
         #region Fields
@@ -57,7 +57,7 @@ namespace MiniAVC_V2
                     return;
                 }
 
-                
+
             }
             catch (Exception ex)
             {
@@ -89,7 +89,7 @@ namespace MiniAVC_V2
         {
             if (UpdateFrequency.ConfigLoaded)
             {
-                UpdateFrequency.SaveConfig(); 
+                UpdateFrequency.SaveConfig();
             }
         }
 

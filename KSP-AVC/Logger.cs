@@ -56,19 +56,10 @@ namespace KSP_AVC
 
             lock (messages)
             {
-                messages.Add(new[] {"Executing: " + assemblyName.Name + " - " + assemblyName.Version});
-                messages.Add(new[] {"Assembly: " + Assembly.GetExecutingAssembly().Location});
+                messages.Add(new[] { "Executing: " + assemblyName.Name + " - " + assemblyName.Version });
+                messages.Add(new[] { "Assembly: " + Assembly.GetExecutingAssembly().Location });
             }
             Blank();
-        }
-
-        #endregion
-
-        #region Destructors
-
-        ~Logger()
-        {
-            Flush();
         }
 
         #endregion
@@ -80,7 +71,7 @@ namespace KSP_AVC
         {
             lock (messages)
             {
-                messages.Add(new string[] {});
+                messages.Add(new string[] { });
             }
         }
 
@@ -88,7 +79,7 @@ namespace KSP_AVC
         {
             lock (messages)
             {
-                messages.Add(new[] {"Error " + DateTime.Now.TimeOfDay, message});
+                messages.Add(new[] { "Error " + DateTime.Now.TimeOfDay, message });
             }
         }
 
@@ -96,7 +87,7 @@ namespace KSP_AVC
         {
             lock (messages)
             {
-                messages.Add(new[] {"Exception " + DateTime.Now.TimeOfDay, ex.ToString()});
+                messages.Add(new[] { "Exception " + DateTime.Now.TimeOfDay, ex.ToString() });
                 Blank();
             }
         }
@@ -105,7 +96,7 @@ namespace KSP_AVC
         {
             lock (messages)
             {
-                messages.Add(new[] {"Exception " + DateTime.Now.TimeOfDay, location + " // " + ex});
+                messages.Add(new[] { "Exception " + DateTime.Now.TimeOfDay, location + " // " + ex });
                 Blank();
             }
         }
@@ -170,17 +161,17 @@ namespace KSP_AVC
                 {
                     if (obj is IEnumerable)
                     {
-                        messages.Add(new[] {"Text " + DateTime.Now.TimeOfDay, name});
-                        
+                        messages.Add(new[] { "Text " + DateTime.Now.TimeOfDay, name });
+
                         foreach (var o in obj as IEnumerable)
                         {
-                            messages.Add(new[] {"\t", o.ToString()});                           
+                            messages.Add(new[] { "\t", o.ToString() });
                         }
                     }
                     else
                     {
                         messages.Add(new[] { "Text " + DateTime.Now.TimeOfDay, name });
-                        messages.Add(new[] {"Text " + DateTime.Now.TimeOfDay, obj.ToString()});
+                        messages.Add(new[] { "Text " + DateTime.Now.TimeOfDay, obj.ToString() });
                     }
                 }
                 catch (Exception ex)
@@ -194,7 +185,7 @@ namespace KSP_AVC
         {
             lock (messages)
             {
-                messages.Add(new[] {"Text " + DateTime.Now.TimeOfDay, message});
+                messages.Add(new[] { "Text " + DateTime.Now.TimeOfDay, message });
             }
         }
 
@@ -202,13 +193,13 @@ namespace KSP_AVC
         {
             lock (messages)
             {
-                messages.Add(new[] {"Warning " + DateTime.Now.TimeOfDay, message});
+                messages.Add(new[] { "Warning " + DateTime.Now.TimeOfDay, message });
             }
         }
 
-#endregion
+        #endregion
 
-#region Methods: protected
+        #region Methods: protected
 
         protected void Awake()
         {
@@ -226,6 +217,6 @@ namespace KSP_AVC
             Flush();
         }
 
-#endregion
+        #endregion
     }
 }

@@ -122,7 +122,7 @@ namespace KSP_AVC
             GUILayout.Label("Show preset values in addon list", this.labelStyleWhite);
             GUILayout.FlexibleSpace();
             toggleState = GUILayout.Toggle(toggleState, "", this.toggleStyle);
-            if(toggleState != Configuration.ShowDefaultValues)
+            if (toggleState != Configuration.ShowDefaultValues)
             {
                 Configuration.ShowDefaultValues = !Configuration.ShowDefaultValues;
             }
@@ -169,7 +169,7 @@ namespace KSP_AVC
         {
             List<Addon> overrideMods = AddonLibrary.Addons.Where(x => x.IsForcedCompatibleByVersion || GuiHelper.CompatibilityState(OverrideType.ignore, x)).OrderBy(x => x.Name).ToList();
             int m = overrideMods.Count;
-            for(int i = 0; i < m; i++)
+            for (int i = 0; i < m; i++)
             {
                 var addon = overrideMods[i];
                 bool toggleState = GuiHelper.CompatibilityState(OverrideType.ignore, addon);
@@ -180,7 +180,7 @@ namespace KSP_AVC
                 GUILayout.FlexibleSpace();
 
                 toggleState = GUILayout.Toggle(toggleState, "", this.toggleStyle);
-                if(toggleState != GuiHelper.CompatibilityState(OverrideType.ignore, addon))
+                if (toggleState != GuiHelper.CompatibilityState(OverrideType.ignore, addon))
                 {
                     GuiHelper.UpdateCompatibilityState(OverrideType.ignore, addon);
                 }

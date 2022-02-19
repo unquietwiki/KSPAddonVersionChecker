@@ -86,11 +86,12 @@ namespace KSP_AVC
 
         public bool IsUpdateAvailable
         {
-            get {
-                bool b = this.IsProcessingComplete && 
-                    this.LocalInfo.Version != null && 
-                    this.RemoteInfo.Version != null && 
-                    this.RemoteInfo.Version > this.LocalInfo.Version && 
+            get
+            {
+                bool b = this.IsProcessingComplete &&
+                    this.LocalInfo.Version != null &&
+                    this.RemoteInfo.Version != null &&
+                    this.RemoteInfo.Version > this.LocalInfo.Version &&
                     //this.RemoteInfo.IsCompatibleKspVersion && 
                     this.RemoteInfo.IsCompatible &&
                     this.RemoteInfo.IsCompatibleGitHubVersion;
@@ -115,7 +116,7 @@ namespace KSP_AVC
 
         public void RunProcessLocalInfo(string path)
         {
-            this.ProcessLocalInfo( path);
+            this.ProcessLocalInfo(path);
             //ThreadPool.QueueUserWorkItem(this.ProcessLocalInfo, path);
         }
 
@@ -159,25 +160,27 @@ namespace KSP_AVC
                     HttpWebRequest request = HttpWebRequest.Create(Uri.EscapeUriString(this.LocalInfo.Url)) as HttpWebRequest;
 
                     request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
-                    request.Accept= "text/html,application/xhtml+xm…plication/xml; q=0.9,*/*;q=0.8";
+                    request.Accept = "text/html,application/xhtml+xm…plication/xml; q=0.9,*/*;q=0.8";
                     request.UserAgent = "KSP-AVC";
                     request.Timeout = 10000;  // milliseconds
                     request.Method = WebRequestMethods.Http.Get;
-                    response = request.GetResponse() as HttpWebResponse;
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    using (response = request.GetResponse() as HttpWebResponse)
                     {
-                        Stream data = response.GetResponseStream();
-                        string html = String.Empty;
-                        using (StreamReader sr = new StreamReader(data))
+                        if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            html = sr.ReadToEnd();
+                            Stream data = response.GetResponseStream();
+                            string html = String.Empty;
+                            using (StreamReader sr = new StreamReader(data))
+                            {
+                                html = sr.ReadToEnd();
+                            }
+                            response.Close();
+                            this.SetRemoteAvcInfo(html);
                         }
-                        response.Close();
-                        this.SetRemoteAvcInfo(html);
-                    }
-                    else
-                    {
-                        this.SetLocalInfoOnly();
+                        else
+                        {
+                            this.SetLocalInfoOnly();
+                        }
                     }
                 }
                 catch (WebException ex)
@@ -273,7 +276,7 @@ namespace KSP_AVC
             this.RemoteInfo = this.LocalInfo;
             this.IsRemoteReady = true;
             this.IsProcessingComplete = true;
-            
+
             Logger.Blank();
         }
 #if false
@@ -294,7 +297,7 @@ namespace KSP_AVC
             if (this.LocalInfo.Version == this.RemoteInfo.Version)
             {
                 Logger.Log("Identical remote version found: Using remote version information only.");
-                Logger.Log("SetRemoteAvcInfo, RemoteInfo "+ this.RemoteInfo.ToString());
+                Logger.Log("SetRemoteAvcInfo, RemoteInfo " + this.RemoteInfo.ToString());
                 Logger.Blank();
                 this.LocalInfo = this.RemoteInfo;
             }
@@ -333,6 +336,6 @@ namespace KSP_AVC
         }
 #endif
 
-#endregion
+        #endregion
     }
 }

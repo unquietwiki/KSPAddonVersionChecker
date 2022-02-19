@@ -43,7 +43,7 @@ namespace KSP_AVC
         private Rect position = new Rect(Screen.width, Screen.height, 0, 0);
         private GUIStyle titleStyle;
         //private bool isInitialised = false;
-        
+
 
         #endregion
 
@@ -88,7 +88,7 @@ namespace KSP_AVC
             catch (Exception ex)
             {
                 Logger.Exception(ex);
-            }     
+            }
         }
 
         protected void Start()
@@ -173,7 +173,7 @@ namespace KSP_AVC
             }
         }
 
-        VersionInfo zero = new VersionInfo();
+        readonly VersionInfo zero = new VersionInfo();
         private void DrawCompatibilityIssues()
         {
             GUILayout.BeginVertical(this.boxStyle);
@@ -202,7 +202,7 @@ namespace KSP_AVC
             }
             GUILayout.EndVertical();
         }
-        
+
         private void DrawUpdateHeadings()
         {
             GUILayout.BeginHorizontal();

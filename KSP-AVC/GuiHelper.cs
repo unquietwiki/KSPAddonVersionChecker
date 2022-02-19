@@ -30,7 +30,7 @@ namespace KSP_AVC
 
         protected void Update()
         {
-            bool modKey = GameSettings.MODIFIER_KEY.GetKey(); 
+            bool modKey = GameSettings.MODIFIER_KEY.GetKey();
             if (modKey && Input.GetKeyDown(KeyCode.Alpha2))
             {
                 if (this.GetComponent<CompatibilityOverrideGui>())
@@ -53,7 +53,7 @@ namespace KSP_AVC
 
         public void ToggleGUI()
         {
-            if(Configuration.OverrideIsDisabledGlobal)
+            if (Configuration.OverrideIsDisabledGlobal)
             {
                 this.gameObject.AddComponent<CompatibilityOverrideEnableGui>();
                 return;
@@ -83,10 +83,10 @@ namespace KSP_AVC
                         if (oldVersion != "")
                         {
                             oldVersion = oldVersion.Replace("*", "-1");
-                             bool b = (from d in Configuration.CompatibleVersions
-                                       where oldVersion == d.Key
-                                       where d.Value.compatWithVersion.Contains(AddonInfo.ActualKspVersion)
-                                       select d).Any();
+                            bool b = (from d in Configuration.CompatibleVersions
+                                      where oldVersion == d.Key
+                                      where d.Value.compatWithVersion.Contains(AddonInfo.ActualKspVersion)
+                                      select d).Any();
                             return b;
                         }
                         return addon.IsForcedCompatibleByVersion;
@@ -130,7 +130,7 @@ namespace KSP_AVC
                             userInput = "";
                             List<string> inputs = reformatInput(versionInfo);
                             var dictKeys = Configuration.CompatibleVersions.Keys;
-              
+
                             if (dictKeys.Contains(inputs[0]) && remove)
                             {
                                 int j = inputs.Count();
@@ -169,7 +169,7 @@ namespace KSP_AVC
                     }
             }
         }
-        
+
         private static bool validateInput(string userInput)
         {
             if (!Regex.IsMatch(userInput, @"[^\d\.\-\*\,\s]")) //matches any character which isn't going to be valid at all
@@ -192,7 +192,7 @@ namespace KSP_AVC
                 {
                     return true;
                 }
-                return false; 
+                return false;
             }
             return false;
         }

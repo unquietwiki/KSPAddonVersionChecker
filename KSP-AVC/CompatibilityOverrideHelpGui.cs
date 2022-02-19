@@ -13,8 +13,8 @@ namespace KSP_AVC
         private GUIStyle boxStyle;
         private GUIStyle buttonStyle;
         private bool hasCentred;
-        private GUIStyle labelStyle;        
-        private Rect position = new Rect(Screen.width, Screen.height,640, 800);
+        private GUIStyle labelStyle;
+        private Rect position = new Rect(Screen.width, Screen.height, 640, 800);
         private GUIStyle topLevelTitleStyle;
 
         #endregion
@@ -78,7 +78,7 @@ namespace KSP_AVC
             scrollPos = GUILayout.BeginScrollView(scrollPos);
             GUILayout.BeginVertical();
             GUILayout.Label("Compatibility Override", this.topLevelTitleStyle);
-            GUILayout.BeginHorizontal(this.boxStyle,GUILayout.Width(600));
+            GUILayout.BeginHorizontal(this.boxStyle, GUILayout.Width(600));
             DrawHelpGeneral();
             GUILayout.EndHorizontal();
             GUILayout.Label("How to use the Override", this.topLevelTitleStyle);
@@ -96,7 +96,7 @@ namespace KSP_AVC
             GUILayout.EndVertical();
             GUILayout.EndScrollView();
         }
-        
+
         private void DrawHelpGeneral()
         {
             GUILayout.Label("The Compatibility Override provides you some control over the AVC Add-on Version Checker." +
@@ -114,11 +114,11 @@ namespace KSP_AVC
         {
             GUILayout.Label(
                 "The main window has three panels.  The center panel is the most important to understand.\n" +
-                
+
                 "The center panel shows a list of all addons which are currently reported as incompatible with the running game version," +
                 " and the max. game version which is allowed by the .version file. " +
                 "\n\nThe addon names are color-coded:" +
-                "\n     Yellow = incompatible" + 
+                "\n     Yellow = incompatible" +
                 "\n     Blue    = affected by any compatibility override" +
                 "\n\nThe list also contains two buttons:  \u25C0  and  \u25B6" +
                 "\nThese buttons allow you to put an addon name on the \"ALWAYS COMPATIBLE\" list or to draft the version number to the \"VERSION OVERRIDE\" list.  " +
@@ -140,7 +140,7 @@ namespace KSP_AVC
                 "\n\nA single version number will be handled like the  \u25B6  button. " +
                 "\n\nYou can also use a wildcard/asterisk on a single version number, but just on the third (patch) number. " +
                 "In order to set each KSP 1.4.x version to be compatible, type in \" 1.4.* \" and click on \"ADD\"." +
-                "\n\nClick the red X to remove a line", this.labelStyle); 
+                "\n\nClick the red X to remove a line", this.labelStyle);
         }
 
         #endregion

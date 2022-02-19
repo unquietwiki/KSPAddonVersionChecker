@@ -29,7 +29,7 @@ namespace KSP_AVC
     public class CheckerProgressGui : MonoBehaviour
     {
         #region Fields
-        
+
         private bool hasCentred;
         private string message = String.Empty;
         private Rect position = new Rect(Screen.width, Screen.height, 0, 0);

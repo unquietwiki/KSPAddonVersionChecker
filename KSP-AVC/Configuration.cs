@@ -38,7 +38,7 @@ namespace KSP_AVC
 
         public void AddCompatibleWithVersion(string version)
         {
-            if(!this.compatibleWithVersion.Contains(version))
+            if (!this.compatibleWithVersion.Contains(version))
             {
                 this.compatibleWithVersion.Add(version);
                 this.compatWithVersion.Add(new VersionInfo(version));
@@ -49,7 +49,7 @@ namespace KSP_AVC
 
         public void RemoveCompatibleWithVersion(string version)
         {
-            if(this.compatibleWithVersion.Contains(version))
+            if (this.compatibleWithVersion.Contains(version))
             {
                 this.compatibleWithVersion.Remove(version);
                 this.compatWithVersion.Remove(new VersionInfo(version));
@@ -62,10 +62,10 @@ namespace KSP_AVC
     public class Configuration
     {
         #region Fields
-        
+
         private static readonly string fileName = Path.ChangeExtension(Assembly.GetExecutingAssembly().Location, "xml");
-        readonly static string AvcConfigFile = KSPUtil.ApplicationRootPath + "GameData/KSP-AVC/PluginData/AVC.cfg";
-        readonly static string AvcConfigFilePath = KSPUtil.ApplicationRootPath + "GameData/KSP-AVC/PluginData";
+        static readonly string AvcConfigFile = KSPUtil.ApplicationRootPath + "GameData/KSP-AVC/PluginData/AVC.cfg";
+        static readonly string AvcConfigFilePath = KSPUtil.ApplicationRootPath + "GameData/KSP-AVC/PluginData";
 
         #endregion
 
@@ -119,7 +119,7 @@ namespace KSP_AVC
 
         public static void AddOverrideName(Addon addon)
         {
-            if(!OverrideCompatibilityByName.Contains(addon.Name))
+            if (!OverrideCompatibilityByName.Contains(addon.Name))
             {
                 OverrideCompatibilityByName.Add(addon.Name);
                 //Logger.Log($"Compatibility Override (by name) enabled for {addon.Name}");
@@ -140,7 +140,7 @@ namespace KSP_AVC
             }
             //Logger.Log($"Cannot remove {addon.Name}. Entry doesn't exists."); //Should never happen but just in case
         }
-        
+
         public static void AddOverrideVersion(string oldVersion, string newVersion)
         {
             string tempOldVersion = oldVersion.Replace("*", "-1");
@@ -177,7 +177,7 @@ namespace KSP_AVC
 
             if (dictKeys.Contains(tempOldVersion))
             {
-                if(CompatibleVersions[tempOldVersion].compatibleWithVersion.Count == 1)
+                if (CompatibleVersions[tempOldVersion].compatibleWithVersion.Count == 1)
                 {
                     //CompatibleVersions.Remove(oldVersion);
                     ToDelete.Add(tempOldVersion); //need to collect keys which are meant to be deleted, bad things will happen if you try this while iterating over the dictionary :o
@@ -197,13 +197,13 @@ namespace KSP_AVC
                 {
                     CompatibleVersions.Remove(version);
                 }
-                ToDelete.Clear(); 
+                ToDelete.Clear();
             }
         }
 
         public static void AddToIgnore(Addon addon)
         {
-            if(!modsIgnoreOverride.Contains(addon.Name))
+            if (!modsIgnoreOverride.Contains(addon.Name))
             {
                 modsIgnoreOverride.Add(addon.Name);
                 //Logger.Log($"{addon.Name} added to ignore list.");
@@ -292,15 +292,17 @@ namespace KSP_AVC
             if (!File.Exists(AvcConfigFile) || !Directory.Exists(AvcConfigFilePath))
             {
                 Directory.CreateDirectory(AvcConfigFilePath);
-                var ConfigFileStream = File.Create(AvcConfigFile);
-                ConfigFileStream.Close(); //avoid System.IO access violation
-                //Some default values so this method can create a config file
-                //modsIgnoreOverride.Add("Kopernicus"); //Unfortunately, the name of Kopernicus is actually "<b><color=#CA7B3C>Kopernicus</color></b>" which may irritates some users
-                OverrideIsDisabledGlobal = true;
-                ShowDefaultValues = true;
-                AvcInterval = 0;
-                //UseKspSkin = true;
-                CfgUpdated = true;
+                using (var ConfigFileStream = File.Create(AvcConfigFile))
+                {
+                    ConfigFileStream.Close(); //avoid System.IO access violation
+                                              //Some default values so this method can create a config file
+                                              //modsIgnoreOverride.Add("Kopernicus"); //Unfortunately, the name of Kopernicus is actually "<b><color=#CA7B3C>Kopernicus</color></b>" which may irritates some users
+                    OverrideIsDisabledGlobal = true;
+                    ShowDefaultValues = true;
+                    AvcInterval = 0;
+                    //UseKspSkin = true;
+                    CfgUpdated = true;
+                }
                 //For some reason, if a config file is missing, it will just create an empty config.
                 //By setting the bool CfgUpdated = true, this method will run again on destroy of the starter, which creates the empty config nodes within the file.
             }
@@ -323,7 +325,7 @@ namespace KSP_AVC
                 OverrideName.AddValue("OverrideEnabled", ModName);
             }
 
-            ConfigNode OverrideVersion = KSPAVC.AddNode("OVERRIDE_VERSION");            
+            ConfigNode OverrideVersion = KSPAVC.AddNode("OVERRIDE_VERSION");
             foreach (KeyValuePair<string, CompatVersions> kvp in CompatibleVersions)
             {
                 string temp = kvp.Key.Replace("-1", "*");
@@ -344,7 +346,7 @@ namespace KSP_AVC
             {
                 Interval.AddValue("MinTimeBetweenAvcRuns", AvcInterval.ToString() + " //Timespan between AVC runs in hours");
 
-                if(DateTime.Compare(DateTime.Now, NextRun) >= 0 && AvcInterval > 0)
+                if (DateTime.Compare(DateTime.Now, NextRun) >= 0 && AvcInterval > 0)
                 {
                     Interval.AddValue("AvcRunsNext", DateTime.Now.AddHours(AvcInterval).ToString());
                     CfgUpdated = true;
@@ -356,7 +358,7 @@ namespace KSP_AVC
             }
             cfgnode.Save(AvcConfigFile);
         }
-         
+
         public static void LoadCfg()
         {
             Logger.Log("LoadCfg");
@@ -370,10 +372,10 @@ namespace KSP_AVC
                 SaveCfg();
                 return;
             }
-            
+
             ConfigNode LoadNodeFromFile = ConfigNode.Load(AvcConfigFile);
             ConfigNode node = LoadNodeFromFile.GetNode("KSP-AVC");
-            
+
             //if (node.HasValue("KSP_SKIN"))
             //{
             //    try
@@ -404,7 +406,7 @@ namespace KSP_AVC
                 }
                 catch { }
             }
-            if(node.HasValue("DISABLE_COMPATIBLE_VERSION_OVERRIDE"))
+            if (node.HasValue("DISABLE_COMPATIBLE_VERSION_OVERRIDE"))
             {
                 try
                 {
@@ -480,9 +482,9 @@ namespace KSP_AVC
                         CompatibleVersions.Add(cv.currentVersion, cv);
                     }
                 }
-                catch { }                    
+                catch { }
             }
-            if(node.HasNode("OVERRIDE_IGNORE"))
+            if (node.HasNode("OVERRIDE_IGNORE"))
             {
                 try
                 {
@@ -491,14 +493,14 @@ namespace KSP_AVC
 
                     List<string> ignoredMods = _temp.GetValuesList("IgnoreOverride");
                     foreach (string modName in ignoredMods)
-                    {                            
+                    {
                         modsIgnoreOverride.Add(modName);
                         //Logger.Log($"IGNORE_OVERRIDE: {modName}");
                     }
                 }
                 catch { }
             }
-            if(node.HasNode("INTERVAL"))
+            if (node.HasNode("INTERVAL"))
             {
                 try
                 {
@@ -506,7 +508,7 @@ namespace KSP_AVC
                     _temp = node.GetNode("INTERVAL");
 
                     AvcInterval = Int32.Parse(_temp.GetValue("MinTimeBetweenAvcRuns"));
-                    if(!_temp.HasValue("AvcRunsNext"))
+                    if (!_temp.HasValue("AvcRunsNext"))
                     {
                         CfgUpdated = true;
                     }
@@ -536,6 +538,6 @@ namespace KSP_AVC
 
         public static Dictionary<string, CompatVersions> CompatibleVersions = new Dictionary<string, CompatVersions>();
 
-#endregion
+        #endregion
     }
 }

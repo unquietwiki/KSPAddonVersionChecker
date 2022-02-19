@@ -42,8 +42,8 @@ namespace KSP_AVC.Toolbar
         private GUIStyle windowStyle;
         private GameObject helper;
         private GuiHelper InstanceGuiHelper;
-        private string overrideAvailable = "<color=#00FF00>Compatibility Override GUI</color>";
-        private string overrideNotAvailable = "<color=#FF0000>Wait for AVC processing...</color>";
+        private readonly string overrideAvailable = "<color=#00FF00>Compatibility Override GUI</color>";
+        private readonly string overrideNotAvailable = "<color=#FF0000>Wait for AVC processing...</color>";
         private string buttonText;
 
         #endregion
@@ -114,7 +114,7 @@ namespace KSP_AVC.Toolbar
                 Logger.Exception(ex);
             }
 
-            if(helper == null)
+            if (helper == null)
             {
                 helper = GameObject.Find("GuiHelper");
                 buttonText = overrideNotAvailable;
@@ -147,9 +147,9 @@ namespace KSP_AVC.Toolbar
             {
                 if (InstanceGuiHelper != null)
                 {
-                    InstanceGuiHelper.ToggleGUI();  
-                }                  
-            }            
+                    InstanceGuiHelper.ToggleGUI();
+                }
+            }
         }
 
         private void CopyToClipboard()
@@ -183,7 +183,7 @@ namespace KSP_AVC.Toolbar
 
             var textEditor = new TextEditor
             {
-               text = copyText
+                text = copyText
             };
 
             textEditor.SelectAll();
@@ -256,7 +256,7 @@ namespace KSP_AVC.Toolbar
                 GUILayout.FlexibleSpace();
                 GUILayout.Label(addon.LocalInfo.Version != null ? addon.LocalInfo.Version.ToString() : String.Empty, labelStyle);
                 GUILayout.EndHorizontal();
-                
+
             }
         }
 
@@ -321,6 +321,6 @@ namespace KSP_AVC.Toolbar
             }
         }
 
-#endregion
+        #endregion
     }
 }

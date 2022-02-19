@@ -121,21 +121,23 @@ namespace MiniAVC_V2
                 HttpWebRequest request = HttpWebRequest.Create(Uri.EscapeUriString(this.LocalInfo.Url)) as HttpWebRequest;
                 request.Method = WebRequestMethods.Http.Get;
                 request.Timeout = 10000;  // milliseconds
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-                if (response.StatusCode == HttpStatusCode.OK)
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    Stream data = response.GetResponseStream();
-                    string html = String.Empty;
-                    using (StreamReader sr = new StreamReader(data))
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        html = sr.ReadToEnd();
+                        Stream data = response.GetResponseStream();
+                        string html = String.Empty;
+                        using (StreamReader sr = new StreamReader(data))
+                        {
+                            html = sr.ReadToEnd();
+                        }
+                        response.Close();
+                        this.SetRemoteInfo(html);
                     }
-                    response.Close();
-                    this.SetRemoteInfo(html);
-                }
-                else
-                {
-                    SetLocalInfoOnly();
+                    else
+                    {
+                        SetLocalInfoOnly();
+                    }
                 }
             }
             catch (WebException ex)

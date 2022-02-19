@@ -354,7 +354,7 @@ namespace KSP_AVC
 
         public bool ParseError { get; private set; }
 
-        private List<string> parseErrorMsgs = new List<string>();
+        private readonly List<string> parseErrorMsgs = new List<string>();
         public string AddParseErrorMsg { set { parseErrorMsgs.Add(value); } }
         internal List<string> ParseErrorMsgs { get { return parseErrorMsgs; } }
 
@@ -482,22 +482,23 @@ namespace KSP_AVC
                 request.UserAgent = "KSP-AVC";
                 request.Timeout = 10000;  // milliseconds
                 request.Method = WebRequestMethods.Http.Get;
-                HttpWebResponse response = request.GetResponse() as HttpWebResponse;
-
-                if (response.StatusCode == HttpStatusCode.OK)
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    Stream data = response.GetResponseStream();
-                    string html = String.Empty;
-                    using (StreamReader sr = new StreamReader(data))
+                    if (response.StatusCode == HttpStatusCode.OK)
                     {
-                        html = sr.ReadToEnd();
+                        Stream data = response.GetResponseStream();
+                        string html = String.Empty;
+                        using (StreamReader sr = new StreamReader(data))
+                        {
+                            html = sr.ReadToEnd();
+                        }
+                        response.Close();
+                        this.ChangeLog = html;
                     }
-                    response.Close();
-                    this.ChangeLog = html;
-                }
-                else
-                {
-                    Logger.Log( "HTTP error: " + response.StatusCode + ", fetching data from URL: " + this.ChangeLogUrl);
+                    else
+                    {
+                        Logger.Log("HTTP error: " + response.StatusCode + ", fetching data from URL: " + this.ChangeLogUrl);
+                    }
                 }
             }
             catch (WebException ex)
@@ -738,7 +739,7 @@ namespace KSP_AVC
             public bool AllowPreRelease { get; private set; }
 
             public bool ParseError { get; private set; }
-            private List<string> parseErrorMsgs = new List<string>();
+            private readonly List<string> parseErrorMsgs = new List<string>();
             public string AddParseErrorMsg { set { parseErrorMsgs.Add(value); } }
             internal List<string> ParseErrorMsgs { get { return parseErrorMsgs; } }
 
@@ -768,17 +769,19 @@ namespace KSP_AVC
                     request.UserAgent = "KSP-AVC";
                     request.Timeout = 10000;  // milliseconds
                     request.Method = WebRequestMethods.Http.Get;
-                    response = request.GetResponse() as HttpWebResponse;
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    using (response = request.GetResponse() as HttpWebResponse)
                     {
-                        Stream data = response.GetResponseStream();
-                        string html = String.Empty;
-                        using (StreamReader sr = new StreamReader(data))
+                        if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            html = sr.ReadToEnd();
+                            Stream data = response.GetResponseStream();
+                            string html = String.Empty;
+                            using (StreamReader sr = new StreamReader(data))
+                            {
+                                html = sr.ReadToEnd();
+                            }
+                            response.Close();
+                            ParseGitHubJson(html);
                         }
-                        response.Close();
-                        ParseGitHubJson(html);
                     }
 
 #else

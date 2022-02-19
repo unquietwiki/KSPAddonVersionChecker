@@ -33,7 +33,7 @@ namespace MiniAVC_V2
         private VersionInfo kspVersionMax;
         private VersionInfo kspVersionMin;
         private List<VersionInfo> kspExcludeVersions = null;
-        private List<VersionInfo> kspIncludeVersions = null;
+        private readonly List<VersionInfo> kspIncludeVersions = null;
 
         static AddonInfo()
         {
@@ -333,17 +333,19 @@ namespace MiniAVC_V2
                     request.UserAgent = "KSP-AVC";
                     request.Timeout = 10000;  // milliseconds
                     request.Method = WebRequestMethods.Http.Get;
-                    response = request.GetResponse() as HttpWebResponse;
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    using (response = request.GetResponse() as HttpWebResponse)
                     {
-                        Stream data = response.GetResponseStream();
-                        string html = String.Empty;
-                        using (StreamReader sr = new StreamReader(data))
+                        if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            html = sr.ReadToEnd();
+                            Stream data = response.GetResponseStream();
+                            string html = String.Empty;
+                            using (StreamReader sr = new StreamReader(data))
+                            {
+                                html = sr.ReadToEnd();
+                            }
+                            response.Close();
+                            ParseGitHubJson(html);
                         }
-                        response.Close();
-                        ParseGitHubJson(html);
                     }
                 }
                 catch (WebException ex)

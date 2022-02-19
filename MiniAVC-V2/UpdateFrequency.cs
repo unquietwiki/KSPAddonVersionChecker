@@ -12,7 +12,7 @@ namespace MiniAVC_V2
         public static bool ConfigLoaded { get; private set; }
         public static int AvcInterval { get; private set; }
         public static DateTime NextRun { get; private set; }
-        static string configPath = KSPUtil.ApplicationRootPath + "GameData/MiniAVCUpdateFrequency.dat";
+        static readonly string configPath = KSPUtil.ApplicationRootPath + "GameData/MiniAVCUpdateFrequency.dat";
 
         public static bool SkipRun
         {
@@ -50,7 +50,7 @@ namespace MiniAVC_V2
             ConfigNode node = LoadNodeFromFile.GetNode("MINI-AVC");
 
             var nodes = node.GetNodes();
-            if(node.HasNode("UPDATE_FREQUENCY"))
+            if (node.HasNode("UPDATE_FREQUENCY"))
             {
                 try
                 {
@@ -61,7 +61,7 @@ namespace MiniAVC_V2
                     if (_temp.HasValue("AvcRunsNext"))
                     {
                         NextRun = DateTime.Parse(_temp.GetValue("AvcRunsNext"));
-                    }                    
+                    }
                 }
                 catch { }
             }

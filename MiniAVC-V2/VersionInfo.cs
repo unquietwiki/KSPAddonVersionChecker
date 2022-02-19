@@ -49,11 +49,11 @@ namespace MiniAVC_V2
         public VersionInfo(string version)
         {
             var sections = Regex.Replace(version, @"[^\d\.]", String.Empty).Split('.');
-            
+
             switch (sections.Length)
             {
                 case 1:
-                    this.SetVersion(SafeParseInt64(sections[0]));                    
+                    this.SetVersion(SafeParseInt64(sections[0]));
                     return;
 
                 case 2:

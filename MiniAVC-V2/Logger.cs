@@ -34,8 +34,8 @@ namespace MiniAVC_V2
     {
         #region Fields
 
-        private static  AssemblyName assemblyName;
-        private static  string fileName;
+        private static AssemblyName assemblyName;
+        private static string fileName;
         private static string LogsPath = null;
         private static readonly List<string[]> messages = new List<string[]>();
 
@@ -51,8 +51,8 @@ namespace MiniAVC_V2
             fileName = assemblyName.Name + ".log";
             File.Delete(fileName);
 
-            messages.Add(new[] {"Executing: " + assemblyName.Name + " - " + assemblyName.Version});
-            messages.Add(new[] {"Assembly: " + Assembly.GetExecutingAssembly().Location});
+            messages.Add(new[] { "Executing: " + assemblyName.Name + " - " + assemblyName.Version });
+            messages.Add(new[] { "Assembly: " + Assembly.GetExecutingAssembly().Location });
             Blank();
         }
         static void LoggerInit()
@@ -75,22 +75,13 @@ namespace MiniAVC_V2
         }
         #endregion
 
-        #region Destructors
-
-        ~Logger()
-        {
-            Flush();
-        }
-
-        #endregion
-
         #region Methods: public
 
         public static void Blank()
         {
             lock (messages)
             {
-                messages.Add(new string[] {});
+                messages.Add(new string[] { });
             }
         }
 
@@ -98,7 +89,7 @@ namespace MiniAVC_V2
         {
             lock (messages)
             {
-                messages.Add(new[] {"Error " + DateTime.Now.TimeOfDay, message});
+                messages.Add(new[] { "Error " + DateTime.Now.TimeOfDay, message });
             }
         }
 
@@ -106,7 +97,7 @@ namespace MiniAVC_V2
         {
             lock (messages)
             {
-                messages.Add(new[] {"Exception " + DateTime.Now.TimeOfDay, ex.ToString()});
+                messages.Add(new[] { "Exception " + DateTime.Now.TimeOfDay, ex.ToString() });
                 Blank();
             }
         }
@@ -115,7 +106,7 @@ namespace MiniAVC_V2
         {
             lock (messages)
             {
-                messages.Add(new[] {"Exception " + DateTime.Now.TimeOfDay, location + " // " + ex});
+                messages.Add(new[] { "Exception " + DateTime.Now.TimeOfDay, location + " // " + ex });
                 Blank();
             }
         }
@@ -152,15 +143,15 @@ namespace MiniAVC_V2
                 {
                     if (obj is IEnumerable)
                     {
-                        messages.Add(new[] {"Log " + DateTime.Now.TimeOfDay, obj.ToString()});
+                        messages.Add(new[] { "Log " + DateTime.Now.TimeOfDay, obj.ToString() });
                         foreach (var o in obj as IEnumerable)
                         {
-                            messages.Add(new[] {"\t", o.ToString()});
+                            messages.Add(new[] { "\t", o.ToString() });
                         }
                     }
                     else
                     {
-                        messages.Add(new[] {"Log " + DateTime.Now.TimeOfDay, obj.ToString()});
+                        messages.Add(new[] { "Log " + DateTime.Now.TimeOfDay, obj.ToString() });
                     }
                 }
                 catch (Exception ex)
@@ -178,15 +169,15 @@ namespace MiniAVC_V2
                 {
                     if (obj is IEnumerable)
                     {
-                        messages.Add(new[] {"Log " + DateTime.Now.TimeOfDay, name});
+                        messages.Add(new[] { "Log " + DateTime.Now.TimeOfDay, name });
                         foreach (var o in obj as IEnumerable)
                         {
-                            messages.Add(new[] {"\t", o.ToString()});
+                            messages.Add(new[] { "\t", o.ToString() });
                         }
                     }
                     else
                     {
-                        messages.Add(new[] {"Log " + DateTime.Now.TimeOfDay, obj.ToString()});
+                        messages.Add(new[] { "Log " + DateTime.Now.TimeOfDay, obj.ToString() });
                     }
                 }
                 catch (Exception ex)
@@ -200,7 +191,7 @@ namespace MiniAVC_V2
         {
             lock (messages)
             {
-                messages.Add(new[] {"Log " + DateTime.Now.TimeOfDay, message});
+                messages.Add(new[] { "Log " + DateTime.Now.TimeOfDay, message });
             }
         }
 
@@ -208,7 +199,7 @@ namespace MiniAVC_V2
         {
             lock (messages)
             {
-                messages.Add(new[] {"Warning " + DateTime.Now.TimeOfDay, message});
+                messages.Add(new[] { "Warning " + DateTime.Now.TimeOfDay, message });
             }
         }
 

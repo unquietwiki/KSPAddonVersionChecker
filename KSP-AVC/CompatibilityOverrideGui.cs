@@ -13,7 +13,7 @@ namespace KSP_AVC
         private readonly VersionInfo version = Assembly.GetExecutingAssembly().GetName().Version;
         private Rect position = new Rect(Screen.width, Screen.height, 0, 0);
         private bool hasCentred;
-        private bool ShowAdvancedSettings = Configuration.OverrideIsDisabledGlobal;
+        private readonly bool ShowAdvancedSettings = Configuration.OverrideIsDisabledGlobal;
         private GUIStyle buttonStyle;
         private GUIStyle scrollList;
         private GUIStyle topLevelTitleStyle;
@@ -31,7 +31,7 @@ namespace KSP_AVC
 
 
         private List<string> versions;
-        private bool[] enabledCompatVersions = new bool[100];
+        private readonly bool[] enabledCompatVersions = new bool[100];
 
         #endregion
 
@@ -144,7 +144,7 @@ namespace KSP_AVC
         {
             GUILayout.BeginVertical();
             DrawHeadingsOverrideVersion();
-            scrollPositionVersionInfo = GUILayout.BeginScrollView(scrollPositionVersionInfo, this.scrollList, GUILayout.Width(230), GUILayout.Height(275));          
+            scrollPositionVersionInfo = GUILayout.BeginScrollView(scrollPositionVersionInfo, this.scrollList, GUILayout.Width(230), GUILayout.Height(275));
             DrawVersionList();
             //DrawStdCompatToggles();
             GUILayout.EndScrollView();
@@ -225,7 +225,7 @@ namespace KSP_AVC
         //            enabledCompatVersions[i] = true;
         //    }
         //}
-        
+
         //void DrawStdCompatToggles()
         //{
         //    if (Configuration.OverrideIsDisabledGlobal)
@@ -260,25 +260,25 @@ namespace KSP_AVC
             GuiHelper.userInput = GUILayout.TextField(GuiHelper.userInput, GUILayout.Width(150.0f), GUILayout.Height(20));
             if (GUILayout.Button("ADD", this.buttonStyle, GUILayout.Width(75), GUILayout.Height(20)))
             {
-                Logger.Log("userInput: " , GuiHelper.userInput);
+                Logger.Log("userInput: ", GuiHelper.userInput);
                 //CheckCompatVersion(GuiHelper.userInput);
-                GuiHelper.UpdateCompatibilityState(OverrideType.version, null, GuiHelper.userInput);               
+                GuiHelper.UpdateCompatibilityState(OverrideType.version, null, GuiHelper.userInput);
 
                 Logger.Log($"AVC Compatibility Override, Version input: {GuiHelper.userInput}");
             }
             GUILayout.EndHorizontal();
         }
 
-#endregion
+        #endregion
 
-#region WindowOverrideAddonList
+        #region WindowOverrideAddonList
 
         private void DrawOverrideAddonList()
         {
             GUILayout.BeginVertical();
             DrawHeadingsAddonList();
             scrollPositionAddonList = GUILayout.BeginScrollView(scrollPositionAddonList, this.scrollList, GUILayout.MinWidth(430), GUILayout.Height(300));
-            DrawIncompatibleMods();            
+            DrawIncompatibleMods();
             GUILayout.EndScrollView();
             GUILayout.EndVertical();
         }
@@ -309,7 +309,7 @@ namespace KSP_AVC
             }
             if (Configuration.ShowDefaultValues)
             {
-                DrawDefaultValues(); 
+                DrawDefaultValues();
             }
             for (int i = 0; i < m; i++)
             {
@@ -398,9 +398,9 @@ namespace KSP_AVC
             }
         }
 
-#endregion
+        #endregion
 
-#region WindowOverrideNameList
+        #region WindowOverrideNameList
 
         private void DrawOverrideNameList()
         {
@@ -442,9 +442,9 @@ namespace KSP_AVC
             }
         }
 
-#endregion
+        #endregion
 
-#region WindowAdvancedSettings
+        #region WindowAdvancedSettings
 
         private void DrawCompatibilityOverrideGui2()
         {
@@ -455,9 +455,9 @@ namespace KSP_AVC
             GUILayout.EndVertical();
         }
 
-#endregion
+        #endregion
 
-#region MainWindow
+        #region MainWindow
 
         private void DrawCompatibilityOverrideGui()
         {
@@ -550,8 +550,8 @@ namespace KSP_AVC
         }
 
         #endregion
-        
-#region Styles
+
+        #region Styles
 
         private void InitialiseStyles()
         {
@@ -652,6 +652,6 @@ namespace KSP_AVC
                 fontStyle = FontStyle.BoldAndItalic,
             };
         }
-#endregion
+        #endregion
     }
 }

@@ -77,7 +77,7 @@ namespace KSP_AVC
                 Logger.Exception(ex);
             }
 
-            if(Configuration.CfgUpdated)
+            if (Configuration.CfgUpdated)
             {
                 Configuration.SaveCfg();
             }
@@ -92,7 +92,7 @@ namespace KSP_AVC
                 {
                     Configuration.LoadCfg();
                 }
-                if(Configuration.AvcInterval == -1)
+                if (Configuration.AvcInterval == -1)
                 {
                     ScreenMessages.PostScreenMessage("AVC disabled", 10);
                     Destroy(this);
